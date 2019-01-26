@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'choice.dart';
+import 'splash.dart';
 import 'model.dart';
 import 'login.dart';
 import 'robin.dart';
