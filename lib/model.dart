@@ -16,7 +16,7 @@ class AppModel extends Model {
 
   User _user;
 
-  void set user(User user) {
+  set user(User user) {
     _user = user;
     Firestore.instance.runTransaction((Transaction transaction) async =>
         await transaction.update(

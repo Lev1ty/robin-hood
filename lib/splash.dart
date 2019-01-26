@@ -34,6 +34,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 child: FlatButton(
                   onPressed: () {
                     ScopedModel.of<AppModel>(context).user = User.ROBIN;
+                    Navigator.pushNamed(context, 'robin');
                   },
                   child: Text('Robin'),
                 ),
