@@ -32,11 +32,12 @@ class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
         title: Text("User Name"),
       )
         bottomNavigationBar: BottomNavigationBar(
-            child: Container(
-              height: children: [
-                Column(
+            children: [
+              Container(
+                child: Column(
                   height: 48;
                   length: 48;
+
 //                  _buildbuttoncolumn(color, icon, label)
     )
         ],
