@@ -40,6 +40,11 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       routes: {
         'choice': (context) => Choice(),
       },
+      body: Column(
+        children: [
+          user_title()
+        ]
+      )
     );
   }
 }
