@@ -74,5 +74,5 @@ class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
         title: Text("Data Set 4"),
         leading: Icon(
           Icons.show_chart),
-  );
-
+  ),
+];
