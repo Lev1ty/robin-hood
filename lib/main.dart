@@ -4,6 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'choice.dart';
 import 'model.dart';
 import 'login.dart';
+import 'robin.dart';
 
 void main() => runApp(
       ScopedModel(
@@ -36,15 +37,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Robin',
-      home: Login(),
+//      home: Login(),
+      initialRoute: 'robin',
       routes: {
         'choice': (context) => Choice(),
+        'robin': (context) => Robin(),
       },
-      body: Column(
-        children: [
-          user_title()
-        ]
-      )
     );
   }
 }
