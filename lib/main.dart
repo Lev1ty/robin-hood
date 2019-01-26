@@ -42,6 +42,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         'choice': (context) => Splash(),
         'the_people': (context) => ThePeople(),
       },
+      body: Column(
+        children: [
+          user_title()
+        ]
+      )
     );
   }
 }
+
