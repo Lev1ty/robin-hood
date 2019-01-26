@@ -1,23 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-class AppModel extends InheritedWidget {
-  const AppModel({
-    Key key,
-    @required Widget child,
-  })
-      : assert(child != null),
-        super(key: key, child: child);
-
-  static AppModel of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(AppModel) as AppModel;
-  }
-
-  @override
-  bool updateShouldNotify(AppModel old) {
-    return true;
-  }
-
-  Future<bool> login(String username, String password) async {
-    return true;
-  }
+class AppModel extends Model {
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: <String>[
+      'email',
+    ],
+  );
 }

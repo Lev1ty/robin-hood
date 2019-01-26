@@ -21,18 +21,14 @@ dependencies:
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
   firebase_core: any
 #  firebase_analytics: any
-
 #  cloud_firestore: any
-
 #  firebase_auth: any
-#  google_sign_in: any
-
+  google_sign_in: any
+  http: any
   rxdart: any
+  scoped_model: any
 
 
 # For information on the generic Dart part of this file, see the

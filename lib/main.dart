@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
+import 'choice.dart';
 import 'model.dart';
 import 'login.dart';
 
-void main() => runApp(AppModel(child: App()));
+void main() => runApp(
+      ScopedModel(
+        model: AppModel(),
+        child: App(),
+      ),
+    );
 
 class App extends StatefulWidget {
   @override
@@ -30,6 +37,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     return MaterialApp(
       title: 'Robin',
       home: Login(),
+      routes: {
+        'choice': (context) => Choice(),
+      },
     );
   }
 }

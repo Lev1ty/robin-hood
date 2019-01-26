@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import 'model.dart';
 
@@ -8,9 +10,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
   AnimationController _controller;
 
   @override
@@ -29,61 +28,30 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 36),
-          children: <Widget>[
-            SizedBox(
-              height: 36,
-            ),
-            Column(
-              children: <Widget>[
-                FlutterLogo(),
-                SizedBox(
-                  height: 24,
-                ),
-                Text(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: FlutterLogo(),
+              ),
+              Expanded(
+                child: Text(
                   'Robin',
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 24,
-            ),
-            Column(
-              children: <Widget>[
-                TextField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                  ),
-                ),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
-                ),
-              ],
-            ),
-            ButtonBar(
-              children: <Widget>[
-                FlatButton(
-                  onPressed: () {
-                    _usernameController.clear();
-                    _passwordController.clear();
+              ),
+              Expanded(
+                child: IconButton(
+                  icon: Icon(Icons.account_circle),
+                  onPressed: () async {
+                    await ScopedModel.of<AppModel>(context)
+                        .googleSignIn
+                        .signIn();
                   },
-                  child: Text('Cancel'),
                 ),
-                RaisedButton(
-                  onPressed: () async => await AppModel.of(context).login(
-                          _usernameController.text, _passwordController.text)
-                      ? print('login success')
-                      : print('login fail'),
-                  child: Text('Login'),
-                ),
-              ],
-            ),
-          ],
+                flex: 2,
+              ),
+            ],
+          ),
         ),
       ),
     );
