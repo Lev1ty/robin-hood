@@ -39,7 +39,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       title: 'Robin',
       home: Login(),
       routes: {
-        'choice': (context) => Splash(),
+        'splash': (context) => Splash(),
         'the_people': (context) => ThePeople(),
       },
     );

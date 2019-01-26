@@ -44,7 +44,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   icon: Icon(Icons.account_circle),
                   onPressed: () {
                     ScopedModel.of<AppModel>(context).login();
-                    Navigator.pushNamed(context, 'choice');
+                    Navigator.pushNamed(context, 'splash');
                   },
                 ),
                 flex: 2,
