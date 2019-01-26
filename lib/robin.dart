@@ -25,22 +25,22 @@ class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("User Name"),
-        ),
-        body: Center(
-            child: Text("User data will go here: ")
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.show_chart), title: Text('Chart')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money), title: Text('Donate')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.map), title: Text("Distribution"))
-          ],
-        ),
+      appBar: AppBar(
+        title: Text("User Name"),
+      ),
+      body: Center(
+          child: Text("User data will go here: ")
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart), title: Text('Chart')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.attach_money), title: Text('Donate')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.map), title: Text("Distribution"))
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: Icon(Icons.attach_money)
@@ -50,4 +50,4 @@ class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
     );
   }
 
-
+}
