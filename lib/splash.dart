@@ -29,7 +29,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
             children: <Widget>[
               Expanded(
                 child: FlatButton(
-                  onPressed: null,
+                  onPressed: () {},
                   child: Text('Robin'),
                 ),
               ),
