@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'model.dart';
-import 'login.dart';
+import 'camera.dart';
 
 void main() => runApp(AppModel(child: App()));
 
@@ -29,7 +28,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Robin',
-      home: Login(),
+      home: Camera(),
     );
   }
 }
+
+
+
