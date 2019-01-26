@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "240863302111",
+    "firebase_url": "https://robin-hood-66e09.firebaseio.com",
+    "project_id": "robin-hood-66e09",
+    "storage_bucket": "robin-hood-66e09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240863302111:android:9d61280e8bdc3edf",
+        "android_client_info": {
+          "package_name": "com.deltahacks.robinhood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240863302111-fkrfo2dlnoep9bf9pr3vrujqjqutm3ma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZyniApaBBNYXGGpxjpQMSIMkgCsLu_nc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
