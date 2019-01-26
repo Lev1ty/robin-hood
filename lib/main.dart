@@ -37,8 +37,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Robin',
-//      home: Login(),
-      initialRoute: 'robin',
+      home: Robin(),
+//      initialRoute: 'robin',
       routes: {
         'choice': (context) => Choice(),
         'robin': (context) => Robin(),

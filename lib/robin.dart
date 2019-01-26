@@ -34,17 +34,20 @@ class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.show_chart), title: Text('Chart')),
+              icon: Icon(Icons.show_chart, color: Colors.blue[500]), title: Text('Chart')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money), title: Text('Donate')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.map), title: Text("Distribution"))
+              icon: Icon(Icons.attach_money, color: Colors.transparent), title: Text(" ")),
+          BottomNavigationBarItem(icon: Icon(Icons.map, color: Colors.blue[500]), title: Text("Distribution"))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.attach_money)
-      ),
+      floatingActionButtonLocation:
+        FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {},
+            icon: Icon(Icons.attach_money),
+            label: Text("Donate")
+
+      )
 
 
     );
