@@ -42,10 +42,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
               Expanded(
                 child: IconButton(
                   icon: Icon(Icons.account_circle),
-                  onPressed: () async {
-                    await ScopedModel.of<AppModel>(context)
-                        .googleSignIn
-                        .signIn();
+                  onPressed: () {
+                    ScopedModel.of<AppModel>(context).login();
                     Navigator.pushNamed(context, 'choice');
                   },
                 ),
