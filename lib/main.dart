@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'choice.dart';
+import 'splash.dart';
 import 'model.dart';
 import 'login.dart';
+import 'the_people.dart';
 
 void main() => runApp(
       ScopedModel(
@@ -38,7 +39,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       title: 'Robin',
       home: Login(),
       routes: {
-        'choice': (context) => Choice(),
+        'choice': (context) => Splash(),
+        'the_people': (context) => ThePeople(),
       },
     );
   }

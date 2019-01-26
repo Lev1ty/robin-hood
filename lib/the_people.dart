@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Choice extends StatefulWidget {
+class ThePeople extends StatefulWidget {
   @override
-  _ChoiceState createState() => _ChoiceState();
+  _ThePeopleState createState() => _ThePeopleState();
 }
 
-class _ChoiceState extends State<Choice> with SingleTickerProviderStateMixin {
+class _ThePeopleState extends State<ThePeople> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   @override

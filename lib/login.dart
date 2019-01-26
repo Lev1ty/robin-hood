@@ -46,6 +46,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     await ScopedModel.of<AppModel>(context)
                         .googleSignIn
                         .signIn();
+                    Navigator.pushNamed(context, 'choice');
                   },
                 ),
                 flex: 2,
