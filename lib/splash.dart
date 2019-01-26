@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'model.dart';
 
-class Login extends StatefulWidget {
+class Splash extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _SplashState createState() => _SplashState();
 }
 
-class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
+class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   @override
@@ -32,22 +31,21 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: FlutterLogo(),
-              ),
-              Expanded(
-                child: Text(
-                  'Robin',
-                ),
-              ),
-              Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.account_circle),
+                child: FlatButton(
                   onPressed: () {
-                    ScopedModel.of<AppModel>(context).login();
-                    Navigator.pushNamed(context, 'splash');
+                    ScopedModel.of<AppModel>(context).user = User.ROBIN;
                   },
+                  child: Text('Robin'),
                 ),
-                flex: 2,
+              ),
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    ScopedModel.of<AppModel>(context).user = User.PEOPLE;
+                    Navigator.pushNamed(context, 'the_people');
+                  },
+                  child: Text('The People'),
+                ),
               ),
             ],
           ),
