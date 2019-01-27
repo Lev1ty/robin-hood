@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:geolocator/geolocator.dart';
@@ -81,6 +82,7 @@ class AppModel extends Model {
               'locationReceived':
                   GeoPoint(position.latitude, position.longitude),
               'timeReceived': FieldValue.serverTimestamp(),
+              'category': documentSnapshots[i].data['category'],
             });
       if (balance >= amount) {
         balance -= amount;
@@ -96,5 +98,23 @@ class AppModel extends Model {
         balance = 0;
       }
     }
+  }
+
+  Stream<QuerySnapshot> get donationHistory {
+    return Firestore.instance
+        .collection('donationHistory')
+        .where('donator', isEqualTo: _documentReference)
+        .snapshots();
+  }
+
+  num totalByCategory(
+      Category category, AsyncSnapshot<QuerySnapshot> snapshot) {
+    return (snapshot.data.documents
+            .where((DocumentSnapshot documentSnapshot) =>
+                documentSnapshot['category'] == category.index)
+            .map((DocumentSnapshot documentSnapshot) =>
+                documentSnapshot['amount'])
+            .reduce((a, b) => a + b) as int)
+        .toDouble();
   }
 }

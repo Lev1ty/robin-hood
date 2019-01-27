@@ -1,29 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'model.dart';
-
-class Robin extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Layout Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Flutter Layout Demo'),
-        ),
-        body: ListView(
-          children: [
-            titleSection,
-            dataSectionTime,
-            dataSectionCategories,
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 Widget titleSection = Container(
   padding: const EdgeInsets.all(32.0),
@@ -60,135 +40,99 @@ Widget titleSection = Container(
   ),
 );
 
-
 Widget dataSectionTime = Container(
   height: 200,
   padding: const EdgeInsets.all(32.0),
-  child: PointsLineChart.withSampleData(),
+  child: PointsLineChart(),
 );
-
 
 /// Donations per unit time
 class PointsLineChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
   final bool animate;
 
-  PointsLineChart(this.seriesList, {this.animate});
-
-  /// Creates a [LineChart] with sample data and no transition.
-  factory PointsLineChart.withSampleData() {
-    return new PointsLineChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
-
+  PointsLineChart({this.animate});
 
   @override
   Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList,
-        animate: animate,
-        defaultRenderer: new charts.LineRendererConfig(includePoints: true));
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<d_DonationsTime, int>> _createSampleData() {
-    final data = [
-      new d_DonationsTime(0, 5),
-      new d_DonationsTime(1, 25),
-      new d_DonationsTime(2, 100),
-      new d_DonationsTime(3, 75),
-    ];
-
-    return [
-      new charts.Series<d_DonationsTime, int>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (d_DonationsTime sales, _) => sales.day,
-        measureFn: (d_DonationsTime sales, _) => sales.dollars,
-        data: data,
-      )
-    ];
+    return StreamBuilder<QuerySnapshot>(
+        stream: ScopedModel.of<AppModel>(context).donationHistory,
+        builder:
+            (BuildContext buildContext, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Container();
+          return charts.LineChart(
+              [
+                new charts.Series<d_DonationsTime, int>(
+                  id: 'Sales',
+                  colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                  domainFn: (d_DonationsTime sales, _) => sales.day,
+                  measureFn: (d_DonationsTime sales, _) => sales.dollars,
+                  data: snapshot.data.documents
+                      .map((DocumentSnapshot documentSnapshot) {
+                    return d_DonationsTime(
+                        (documentSnapshot['timeDonated'] as DateTime).day,
+                        (documentSnapshot['amount'] as int));
+                  }).toList(),
+                )
+              ].cast<charts.Series<dynamic, int>>(),
+              animate: animate,
+              defaultRenderer:
+                  new charts.LineRendererConfig(includePoints: true));
+        });
   }
 }
-
 
 /// Linear data type
 class d_DonationsTime {
   final int day;
-  final double dollars;
+  final num dollars;
 
   d_DonationsTime(this.day, this.dollars);
 }
 
-
 Widget dataSectionCategories = Container(
   height: 200,
   padding: const EdgeInsets.all(32.0),
-  child: DonutAutoLabelChart.withSampleData(),
+  child: DonutAutoLabelChart(),
 );
 
 /// Donation transaction categories
 class DonutAutoLabelChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
   final bool animate;
 
-  DonutAutoLabelChart(this.seriesList, {this.animate});
-
-  /// Creates a [PieChart] with sample data and no transition.
-  factory DonutAutoLabelChart.withSampleData() {
-    return new DonutAutoLabelChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
-
+  DonutAutoLabelChart({this.animate});
 
   @override
   Widget build(BuildContext context) {
-    return new charts.PieChart(seriesList,
-        animate: animate,
-        // Configure the width of the pie slices to 60px. The remaining space in
-        // the chart will be left as a hole in the center.
-        //
-        // [ArcLabelDecorator] will automatically position the label inside the
-        // arc if the label will fit. If the label will not fit, it will draw
-        // outside of the arc with a leader line. Labels can always display
-        // inside or outside using [LabelPosition].
-        //
-        // Text style for inside / outside can be controlled independently by
-        // setting [insideLabelStyleSpec] and [outsideLabelStyleSpec].
-        //
-        // Example configuring different styles for inside/outside:
-        //       new charts.ArcLabelDecorator(
-        //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-        //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
-        defaultRenderer: new charts.ArcRendererConfig(
-            arcWidth: 60,
-            arcRendererDecorators: [new charts.ArcLabelDecorator()]));
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<d_DonationsCategory, int>> _createSampleData() {
-    final data = [
-      new d_DonationsCategory(1, "Food", 100),
-      new d_DonationsCategory(2, "Personal hygeine", 75),
-      new d_DonationsCategory(3, "Education", 25),
-      new d_DonationsCategory(4, "Other", 5),
-    ];
-
-    return [
-      new charts.Series<d_DonationsCategory, int>(
-        id: 'Sales',
-        domainFn: (d_DonationsCategory cat, _) => cat.enumeration,
-        measureFn: (d_DonationsCategory cat, _) => cat.dollars,
-        data: data,
-        // Set a label accessor to control the text of the arc label.
-        labelAccessorFn: (d_DonationsCategory row, _) => '${row.category}',
-      )
-    ];
+    return StreamBuilder<QuerySnapshot>(
+        stream: ScopedModel.of<AppModel>(context).donationHistory,
+        builder:
+            (BuildContext buildContext, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Container();
+          return charts.PieChart(
+              [
+                new charts.Series<d_DonationsCategory, int>(
+                  id: 'Sales',
+                  domainFn: (d_DonationsCategory cat, _) => cat.enumeration,
+                  measureFn: (d_DonationsCategory cat, _) => cat.dollars,
+                  data: [
+                    d_DonationsCategory(
+                      Category.FOOD.index,
+                      'Food',
+                      ScopedModel.of<AppModel>(context)
+                          .totalByCategory(Category.FOOD, snapshot),
+                    ),
+                  ],
+                  labelAccessorFn: (d_DonationsCategory row, _) =>
+                      '${row.category}',
+                )
+              ].cast<charts.Series<dynamic, int>>(),
+              animate: animate,
+              defaultRenderer: new charts.ArcRendererConfig(
+                  arcWidth: 60,
+                  arcRendererDecorators: [new charts.ArcLabelDecorator()]));
+        });
   }
 }
 
@@ -247,7 +191,11 @@ class Robin extends StatelessWidget {
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
-                  <Widget>[],
+                  <Widget>[
+                    titleSection,
+                    dataSectionTime,
+                    dataSectionCategories,
+                  ],
                 ),
               ),
             ],
