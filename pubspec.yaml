@@ -27,6 +27,7 @@ dependencies:
   geolocator: any
   google_sign_in: any
   scoped_model: any
+  charts_flutter: ^0.5.0
 
 dev_dependencies:
 
