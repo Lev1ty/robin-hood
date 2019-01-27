@@ -6,6 +6,7 @@ import 'model.dart';
 import 'login.dart';
 import 'robin.dart';
 import 'the_people.dart';
+import 'camera.dart';
 
 void main() => runApp(
       ScopedModel(
@@ -43,8 +44,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         'splash': (context) => Splash(),
         'the_people': (context) => ThePeople(),
         'robin': (context) => Robin(),
+        'camera': (context) => Camera(),
       },
     );
   }
 }
-
