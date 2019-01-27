@@ -41,7 +41,9 @@ class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         title: Text("Robin Hood"),
       ),
-      floatingActionButton: FloatingActionButton.extended(icon: Icon(Icons.add), label: Text("Money"),
+      floatingActionButtonLocation:
+        FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton.extended(icon: Icon(Icons.add), label: Text("Money"),
         onPressed: (){
       _settingBottomSheet(context);
     },
