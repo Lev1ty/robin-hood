@@ -21,25 +21,32 @@ class _CameraState extends State<Camera> {
       _image = image;
     });
   }
-/*
-  Future Use_Azure() async {
 
-    final String url = "https://canadacentral.api.cognitive.microsoft.com/vision/v2.0/ocr";
+  Future useAzure(String imgUrl) async {
+    // final String url = "https://canadacentral.api.cognitive.microsoft.com/vision/v2.0/ocr";
+    final String url = "https://canadacentral.api.cognitive.microsoft.com/vision/v2.0/ocr?detectOrientation=true&language=unk";
     final String key = "68d2c9111c95476798620f32134362bc";
-    List words;
-    List line_infos;
-    List word_metadata;
-    List word_info;
+    // imgUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Atomist_quote_from_Democritus.png/338px-Atomist_quote_from_Democritus.png";
 
-
-    var res = await http
-        .post(url, headers: {'Ocp-Apim-Subscription-Key': key}, body: {'language': 'unk', 'detectOrientation': 'true'});
+    var res = await http.post(url,
+      headers: {'Ocp-Apim-Subscription-Key': key, 'Content-Type': 'application/json'},
+      body: jsonEncode({'url': imgUrl})
+    ).then((response) {
+      for (Map region in jsonDecode(response.body)['regions']) {
+        for (Map line in region['lines']) {
+          for (Map word in line['words']) {
+            print(word['text']);
+          }
+        }
+      }
+    });
+/*
     setState(() {
       var resBody = json.decode(res.body);
       words = resBody["regions"];
     });
-  }
 */
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +87,7 @@ class _CameraState extends State<Camera> {
               var downUrl = await (await task.onComplete).ref.getDownloadURL();
               var url = downUrl.toString();
               print(url);
+              useAzure(url);
             },
           )
         ],
