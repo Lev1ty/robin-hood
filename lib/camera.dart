@@ -75,7 +75,7 @@ class _CameraState extends State<Camera> {
             textColor: Colors.white,
             color: Colors.blue,
             onPressed: () async{
-              final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('reciept.jpg');
+              final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('reciept1.jpg');
               final StorageUploadTask task = firebaseStorageRef.putFile(_image);
               var downUrl = await (await task.onComplete).ref.getDownloadURL();
               var url = downUrl.toString();
