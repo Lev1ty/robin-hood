@@ -1,212 +1,199 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class Robin extends StatefulWidget {
+class Robin extends StatelessWidget {
   @override
-  _RobinState createState() => _RobinState();
-}
-
-List<Widget> list = <Widget>[
-  ListTile(
-    title: Text("Data Set 1"),
-    leading: Icon(Icons.group),
-  ),
-  ListTile(
-    title: Text("Data Set 2"),
-    leading: Icon(Icons.place),
-  ),
-  ListTile(
-    title: Text("Data Set 3"),
-    leading: Icon(Icons.history),
-  ),
-  ListTile(
-    title: Text("Data Set 4"),
-    leading: Icon(Icons.show_chart),
-  ),
-];
-//class _robinState extends State<Robin> {
-//  bool _wantDonate = true;
-//class _ChartsState extends State<Robin>{
-//
-//  @override
-//  Widget build(BuildContext, context){
-//    return Scaffold(
-//
-//    );
-//  }
-
-class DonationPerTime {
-  final int weeks;
-  final double amount;
-
-  DonationPerTime(this.weeks, this.amount);
-}
-
-class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
-  @override
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  AnimationController _controller;
-
-  get height => 48;
-
-  Widget build(BuildContext build) {
-    var data = [
-      new DonationPerTime(0, 0.0),
-      new DonationPerTime(1, 10.0),
-      new DonationPerTime(2, 25.0),
-      new DonationPerTime(3, 30.0),
-      new DonationPerTime(4, 59.0),
-      new DonationPerTime(5, 70.0),
-      new DonationPerTime(6, 110.0),
-    ];
-    var series = [
-      new charts.Series<DonationPerTime, String>(
-        id: 'weeks',
-        domainFn: (DonationPerTime donationData, _) =>
-            donationData.weeks.toString(),
-        measureFn: (DonationPerTime donationData, _) => donationData.amount,
-        data: data,
-      ),
-    ];
-    var chart = new charts.BarChart(series, animate: true);
-    var chartWidget = new Padding(
-      padding: new EdgeInsets.all(32.0),
-      child: new SizedBox(
-        height: 200.0,
-        child: chart,
-      ),
-    );
-    return Scaffold(
-      appBar: AppBar(
-        title: new Text("Donations over Time"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("You have donated a large amount"),
-            Text("$_counter"),
-            chartWidget,
-          ],
-        ),
-      ),
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Robin Hood"),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.add),
-        label: Text("Money"),
-        onPressed: () {
-          _settingBottomSheet(context);
-        },
-      ),
-      body: Container(
-          child: ListView(
-        children: <Widget>[
-          ListTile(
-            title: Text("Data Set 1"),
-            leading: Icon(Icons.group),
-          ),
-          ListTile(
-            title: Text("Data Set 2"),
-            leading: Icon(Icons.place),
-          ),
-          ListTile(
-            title: Text("Data Set 3"),
-            leading: Icon(Icons.history),
-          ),
-          ListTile(
-            title: Text("Data Set 4"),
-            leading: Icon(Icons.show_chart),
-          ),
-        ],
-      )),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.pie_chart_outlined, color: Colors.blue[500]),
-              title: Text('Chart')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money, color: Colors.transparent),
-              title: Text(" ")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.map, color: Colors.blue[500]),
-              title: Text('Map'))
-        ],
-      ),
-    );
-  }
-
-  void _settingBottomSheet(context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return Container(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                  leading: Icon(Icons.add), title: Text("Donation amount")),
-              ListTile(
-                  leading: Icon(Icons.account_circle), title: Text("Name")),
-              ListTile(
-                  leading: Icon(Icons.account_circle), title: Text("Example")),
-              ListTile(leading: Icon(Icons.accessible), title: Text("Example")),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    _controller = AnimationController(vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget builder(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Layout Demo',
+      home: Scaffold(
         appBar: AppBar(
-          title: Text("User Name"),
+          title: Text('Flutter Layout Demo'),
         ),
-        body: Center(
-          child: ListView(children: list),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.pie_chart_outlined, color: Colors.blue[500]),
-                title: Text('Chart')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money, color: Colors.transparent),
-                title: Text(" ")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.map, color: Colors.blue[500]),
-                title: Text('Map'))
+        body: ListView(
+          children: [
+            titleSection,
+            dataSectionTime,
+            dataSectionCategories,
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
-            icon: Icon(Icons.attach_money),
-            label: Text("Donate")));
+      ),
+    );
   }
+}
+
+Widget titleSection = Container(
+  padding: const EdgeInsets.all(32.0),
+  child: Row(
+    children: [
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                'Sheriff of Nottingham',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Text(
+              'Lord',
+              style: TextStyle(
+                color: Colors.grey[500],
+              ),
+            ),
+          ],
+        ),
+      ),
+      Icon(
+        Icons.star,
+        color: Colors.yellow[700],
+      ),
+      Text('41 Donations'),
+    ],
+  ),
+);
+
+
+Widget dataSectionTime = Container(
+  height: 200,
+  padding: const EdgeInsets.all(32.0),
+  child: PointsLineChart.withSampleData(),
+);
+
+
+/// Donations per unit time
+class PointsLineChart extends StatelessWidget {
+  final List<charts.Series> seriesList;
+  final bool animate;
+
+  PointsLineChart(this.seriesList, {this.animate});
+
+  /// Creates a [LineChart] with sample data and no transition.
+  factory PointsLineChart.withSampleData() {
+    return new PointsLineChart(
+      _createSampleData(),
+      // Disable animations for image tests.
+      animate: false,
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.LineChart(seriesList,
+        animate: animate,
+        defaultRenderer: new charts.LineRendererConfig(includePoints: true));
+  }
+
+  /// Create one series with sample hard coded data.
+  static List<charts.Series<d_DonationsTime, int>> _createSampleData() {
+    final data = [
+      new d_DonationsTime(0, 5),
+      new d_DonationsTime(1, 25),
+      new d_DonationsTime(2, 100),
+      new d_DonationsTime(3, 75),
+    ];
+
+    return [
+      new charts.Series<d_DonationsTime, int>(
+        id: 'Sales',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (d_DonationsTime sales, _) => sales.day,
+        measureFn: (d_DonationsTime sales, _) => sales.dollars,
+        data: data,
+      )
+    ];
+  }
+}
+
+
+/// Linear data type
+class d_DonationsTime {
+  final int day;
+  final double dollars;
+
+  d_DonationsTime(this.day, this.dollars);
+}
+
+
+Widget dataSectionCategories = Container(
+  height: 200,
+  padding: const EdgeInsets.all(32.0),
+  child: DonutAutoLabelChart.withSampleData(),
+);
+
+/// Donation transaction categories
+class DonutAutoLabelChart extends StatelessWidget {
+  final List<charts.Series> seriesList;
+  final bool animate;
+
+  DonutAutoLabelChart(this.seriesList, {this.animate});
+
+  /// Creates a [PieChart] with sample data and no transition.
+  factory DonutAutoLabelChart.withSampleData() {
+    return new DonutAutoLabelChart(
+      _createSampleData(),
+      // Disable animations for image tests.
+      animate: false,
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.PieChart(seriesList,
+        animate: animate,
+        // Configure the width of the pie slices to 60px. The remaining space in
+        // the chart will be left as a hole in the center.
+        //
+        // [ArcLabelDecorator] will automatically position the label inside the
+        // arc if the label will fit. If the label will not fit, it will draw
+        // outside of the arc with a leader line. Labels can always display
+        // inside or outside using [LabelPosition].
+        //
+        // Text style for inside / outside can be controlled independently by
+        // setting [insideLabelStyleSpec] and [outsideLabelStyleSpec].
+        //
+        // Example configuring different styles for inside/outside:
+        //       new charts.ArcLabelDecorator(
+        //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
+        //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
+        defaultRenderer: new charts.ArcRendererConfig(
+            arcWidth: 60,
+            arcRendererDecorators: [new charts.ArcLabelDecorator()]));
+  }
+
+  /// Create one series with sample hard coded data.
+  static List<charts.Series<d_DonationsCategory, int>> _createSampleData() {
+    final data = [
+      new d_DonationsCategory(1, "Food", 100),
+      new d_DonationsCategory(2, "Personal hygeine", 75),
+      new d_DonationsCategory(3, "Education", 25),
+      new d_DonationsCategory(4, "Other", 5),
+    ];
+
+    return [
+      new charts.Series<d_DonationsCategory, int>(
+        id: 'Sales',
+        domainFn: (d_DonationsCategory cat, _) => cat.enumeration,
+        measureFn: (d_DonationsCategory cat, _) => cat.dollars,
+        data: data,
+        // Set a label accessor to control the text of the arc label.
+        labelAccessorFn: (d_DonationsCategory row, _) => '${row.category}',
+      )
+    ];
+  }
+}
+
+/// A certain category of donation and how much was donated
+class d_DonationsCategory {
+  final int enumeration;
+  final String category;
+  final double dollars;
+
+  d_DonationsCategory(this.enumeration, this.category, this.dollars);
 }
