@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'the_people.dart';
 
 class Camera extends StatefulWidget {
   @override
@@ -13,6 +15,8 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   File _image;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera, maxHeight: 1600);
@@ -147,11 +151,54 @@ class _CameraState extends State<Camera> {
 */
   }
 
+  showNotification() async {
+    var android = new AndroidNotificationDetails(
+        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+        priority: Priority.High,importance: Importance.Max
+    );
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'Your proof of purchase has been accepted!', 'Flutter Local Notification', platform,
+        payload: 'reciept recognized');
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return ThePeople();
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSettings = new InitializationSettings(android, iOS);
+    flutterLocalNotificationsPlugin.initialize(initSettings,
+        onSelectNotification: onSelectNotification);
+  }
+
+  Future onSelectNotification(String payload) {
+    debugPrint("payload : $payload");
+    showDialog(
+      context: context,
+      builder: (_) => new AlertDialog(
+        title: new Text('Notification'),
+        content: new Text('$payload'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Proof of Purchase'),
+          backgroundColor: Colors.lightGreen,
       ),
       body: new Center(
         child: _image == null
@@ -163,26 +210,29 @@ class _CameraState extends State<Camera> {
             onPressed: getImage,
             tooltip: 'Take Photo',
             child: Icon(Icons.photo_camera),
+            backgroundColor: Colors.lightGreen,
           ),
     );
   }
   Widget enableUpload() {
     return Container(
+      color: Colors.lightGreen,
       child: Column (
+
         children: <Widget>[
           Image.file(_image, scale: 0.6),
           RaisedButton(
             elevation: 7.0,
             child: Text('Upload'),
             textColor: Colors.white,
-            color: Colors.blue,
+            color: Colors.lightBlue,
             onPressed: () async{
               final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('reciept1.jpg');
               final StorageUploadTask task = firebaseStorageRef.putFile(_image);
               var downUrl = await (await task.onComplete).ref.getDownloadURL();
               var url = downUrl.toString();
               print(url);
-              useAzure(url);
+              useAzure(url).then(showNotification());
             },
           )
         ],
