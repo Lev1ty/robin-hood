@@ -5,47 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'model.dart';
 
-Widget titleSection = Container(
-  padding: const EdgeInsets.all(32.0),
-  child: Row(
-    children: [
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                'Sheriff of Nottingham',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Text(
-              'Lord',
-              style: TextStyle(
-                color: Colors.grey[500],
-              ),
-            ),
-          ],
-        ),
-      ),
-      Icon(
-        Icons.star,
-        color: Colors.yellow[700],
-      ),
-      Text('41 Donations'),
-    ],
-  ),
-);
-
-Widget dataSectionTime = Container(
-  height: 200,
-  padding: const EdgeInsets.all(32.0),
-  child: PointsLineChart(),
-);
-
 /// Donations per unit time
 class PointsLineChart extends StatelessWidget {
   final bool animate;
@@ -121,7 +80,7 @@ class DonutAutoLabelChart extends StatelessWidget {
                       Category.FOOD.index,
                       'Food',
                       ScopedModel.of<AppModel>(context)
-                          .totalByCategory(Category.FOOD, snapshot),
+                          .amountByCategory(Category.FOOD, snapshot),
                     ),
                   ],
                   labelAccessorFn: (d_DonationsCategory row, _) =>
@@ -192,8 +151,58 @@ class Robin extends StatelessWidget {
               SliverList(
                 delegate: SliverChildListDelegate(
                   <Widget>[
-                    titleSection,
-                    dataSectionTime,
+                    Container(
+                      padding: const EdgeInsets.all(32.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: Text(
+                                    'Sheriff of Nottingham',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Lord',
+                                  style: TextStyle(
+                                    color: Colors.grey[500],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow[700],
+                          ),
+                          StreamBuilder<QuerySnapshot>(
+                            stream: ScopedModel.of<AppModel>(context)
+                                .donationHistory,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              int count = 0;
+                              if (snapshot.connectionState !=
+                                  ConnectionState.waiting) {
+                                count = ScopedModel.of<AppModel>(context)
+                                    .count(snapshot);
+                              }
+                              return Text('$count Donations');
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 200,
+                      padding: const EdgeInsets.all(32.0),
+                      child: PointsLineChart(),
+                    ),
                     dataSectionCategories,
                   ],
                 ),

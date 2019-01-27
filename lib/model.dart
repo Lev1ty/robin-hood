@@ -107,7 +107,7 @@ class AppModel extends Model {
         .snapshots();
   }
 
-  num totalByCategory(
+  num amountByCategory(
       Category category, AsyncSnapshot<QuerySnapshot> snapshot) {
     return (snapshot.data.documents
             .where((DocumentSnapshot documentSnapshot) =>
@@ -116,5 +116,13 @@ class AppModel extends Model {
                 documentSnapshot['amount'])
             .reduce((a, b) => a + b) as int)
         .toDouble();
+  }
+
+  num count(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return snapshot.data.documents
+        .where((DocumentSnapshot documentSnapshot) =>
+            documentSnapshot['donator'] == _documentReference)
+        .toList()
+        .length;
   }
 }
