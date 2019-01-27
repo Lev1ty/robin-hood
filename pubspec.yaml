@@ -25,6 +25,7 @@ dependencies:
   google_sign_in: any
   http: any
   scoped_model: any
+  charts_flutter: ^0.5.0
 
 dev_dependencies:
 

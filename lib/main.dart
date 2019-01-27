@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:charts_flutter/flutter.dart';
 
 import 'splash.dart';
 import 'model.dart';
@@ -43,6 +44,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         'splash': (context) => Splash(),
         'the_people': (context) => ThePeople(),
         'robin': (context) => Robin(),
+
       },
     );
   }
