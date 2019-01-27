@@ -32,6 +32,3 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     );
   }
 }
-
-
-
