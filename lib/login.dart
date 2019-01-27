@@ -31,18 +31,25 @@ class Login extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 24),
-                            child: Hero(
-                              tag: 'Robin title',
-                              child: Text(
-                                'Robin',
-                                style: TextStyle(
-                                  fontSize: 48,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/logo.png'),
+                            ),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 24),
+                              child: Hero(
+                                tag: 'Robin title',
+                                child: Text(
+                                  'Robin',
+                                  style: TextStyle(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -120,4 +127,3 @@ class Login extends StatelessWidget {
     );
   }
 }
-
