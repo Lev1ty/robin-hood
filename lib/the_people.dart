@@ -43,7 +43,8 @@ class _ThePeopleState extends State<ThePeople>
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+//            ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+            Navigator.pushNamed(context, 'camera');
           },
           child: Icon(Icons.photo_camera),
         ),
