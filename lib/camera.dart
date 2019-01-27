@@ -114,10 +114,10 @@ class _CameraState extends State<Camera> {
     final String key = "68d2c9111c95476798620f32134362bc";
 
     // Shoppers Drug Mart receipt
-    imgUrl = "https://i.imgur.com/ArVOOTjl.jpg";
+   //imgUrl = "https://i.imgur.com/ArVOOTjl.jpg";
 
     // Costco receipt
-    // imgUrl = "https://3.bp.blogspot.com/-mY8IX1i3GH8/VrF7oiJJAGI/AAAAAAAAA-k/obsJXB8GdMc/s1600/costco%2B5.jpg";
+    imgUrl = "https://3.bp.blogspot.com/-mY8IX1i3GH8/VrF7oiJJAGI/AAAAAAAAA-k/obsJXB8GdMc/s1600/costco%2B5.jpg";
 
     // Walmart receipt
     // imgUrl = "https://images.sampletemplates.com/wp-content/uploads/2018/04/Detailed-Grocery-Payment-Receipt-Samples.jpg";

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'camera.dart';
 import 'model.dart';
 
 class ThePeople extends StatelessWidget {
@@ -10,6 +10,13 @@ class ThePeople extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return Camera();
+              },
+            ),
+          );
         },
         icon: Icon(Icons.attach_money),
         label: Text("Withdrawl"),
