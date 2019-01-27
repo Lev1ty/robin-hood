@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'model.dart';
 
 class Robin extends StatefulWidget {
   @override
@@ -7,8 +10,6 @@ class Robin extends StatefulWidget {
 
 class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
   AnimationController _controller;
-
-  get height => 48;
 
   @override
   void initState() {
@@ -24,33 +25,40 @@ class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("User Name"),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Robin"),
+        ),
+        body: Center(child: Text("User data will go here: ")),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart),
+              title: Text('Chart'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.attach_money,
+                color: Colors.transparent,
+              ),
+              title: Text(" "),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              title: Text("Distribution"),
+            ),
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            ScopedModel.of<AppModel>(context).donate(Category.FOOD);
+          },
+          icon: Icon(Icons.attach_money),
+          label: Text("Donate"),
+        ),
       ),
-      body: Center(
-          child: Text("User data will go here: ")
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.show_chart, color: Colors.blue[500]), title: Text('Chart')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money, color: Colors.transparent), title: Text(" ")),
-          BottomNavigationBarItem(icon: Icon(Icons.map, color: Colors.blue[500]), title: Text("Distribution"))
-        ],
-      ),
-      floatingActionButtonLocation:
-        FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
-            icon: Icon(Icons.attach_money),
-            label: Text("Donate")
-
-      )
-
-
     );
   }
-
 }

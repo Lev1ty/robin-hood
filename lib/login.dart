@@ -25,9 +25,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
           child: Column(
             children: <Widget>[
               Expanded(

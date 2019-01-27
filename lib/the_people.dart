@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'model.dart';
 
 class ThePeople extends StatefulWidget {
   @override
@@ -23,21 +26,27 @@ class _ThePeopleState extends State<ThePeople>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('The People'),
-      ),
-      body: Container(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.photo_camera),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('The People'),
+        ),
+        body: Container(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), title: Text('Home')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), title: Text('Home')),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+          },
+          child: Icon(Icons.photo_camera),
+        ),
       ),
     );
   }
