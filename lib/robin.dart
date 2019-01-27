@@ -115,54 +115,54 @@ void _settingBottomSheet(context) {
 
 
 
-  @override
-  void initState() {
-    _controller = AnimationController(vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget builder(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("User Name"),
-        ),
-        body: Center(
-          child: ListView(
-              children: list
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.pie_chart_outlined, color: Colors.blue[500]),
-                title: Text('Chart')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money, color: Colors.transparent),
-                title: Text(" ")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.map, color: Colors.blue[500]),
-                title: Text('Map'))
-          ],
-        ),
-
-        floatingActionButtonLocation:
-        FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
-            icon: Icon(Icons.attach_money),
-            label: Text("Donate")
-
-
-        )
-
-
-    );
-  }
+//  @override
+//  void initState() {
+//    _controller = AnimationController(vsync: this);
+//    super.initState();
+//  }
+//
+//  @override
+//  void dispose() {
+//    _controller.dispose();
+//    super.dispose();
+//  }
+//
+//  @override
+//  Widget builder(BuildContext context) {
+//    return Scaffold(
+//        appBar: AppBar(
+//          title: Text("User Name"),
+//        ),
+//        body: Center(
+//          child: ListView(
+//              children: list
+//          ),
+//        ),
+//        bottomNavigationBar: BottomNavigationBar(
+//          items: <BottomNavigationBarItem>[
+//            BottomNavigationBarItem(
+//                icon: Icon(Icons.pie_chart_outlined, color: Colors.blue[500]),
+//                title: Text('Chart')),
+//            BottomNavigationBarItem(
+//                icon: Icon(Icons.attach_money, color: Colors.transparent),
+//                title: Text(" ")),
+//            BottomNavigationBarItem(
+//                icon: Icon(Icons.map, color: Colors.blue[500]),
+//                title: Text('Map'))
+//          ],
+//        ),
+//
+//        floatingActionButtonLocation:
+//        FloatingActionButtonLocation.centerDocked,
+//        floatingActionButton: FloatingActionButton.extended(
+//            onPressed: () {},
+//            icon: Icon(Icons.attach_money),
+//            label: Text("Donate")
+//
+//
+//        )
+//
+//
+//    );
+//  }
 }
