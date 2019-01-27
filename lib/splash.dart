@@ -31,23 +31,32 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    ScopedModel.of<AppModel>(context).user = User.ROBIN;
-                    Navigator.pushNamed(context, 'robin');
-                  },
-                  child: Text('Robin'),
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: FlatButton(
+                    onPressed: () {
+                      ScopedModel.of<AppModel>(context).user = User.ROBIN;
+                      Navigator.pushNamed(context, 'robin');
+                    },
+                    child: Text('Robin'),
+                  ),
                 ),
               ),
               Expanded(
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: FlatButton(
+                  child: MaterialButton(
                     onPressed: () {
                       ScopedModel.of<AppModel>(context).user = User.PEOPLE;
                       Navigator.pushNamed(context, 'the_people');
                     },
-                    child: Text('The People'),
+                    child: Text(
+                      'The People',
+                      style: TextStyle(
+                        color: Theme.of(context).backgroundColor,
+                      ),
+                    ),
+                    color: Theme.of(context).primaryColorDark,
                   ),
                 ),
               ),

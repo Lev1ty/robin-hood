@@ -3,50 +3,57 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'model.dart';
 
-class ThePeople extends StatefulWidget {
-  @override
-  _ThePeopleState createState() => _ThePeopleState();
-}
-
-class _ThePeopleState extends State<ThePeople>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class ThePeople extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('The People'),
-        ),
-        body: Container(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text('Home')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text('Home')),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-//            ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
-            Navigator.pushNamed(context, 'camera');
-          },
-          child: Icon(Icons.photo_camera),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+        },
+        icon: Icon(Icons.attach_money),
+        label: Text("Withdrawl"),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.lightGreen,
+      ),
+      body: Hero(
+        tag: 'The People',
+        child: Material(
+          color: Colors.lightGreen,
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                pinned: true,
+                expandedHeight: 120,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Hero(
+                    tag: 'The People title',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Text(
+                        'The People',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  background: Container(
+                    color: Colors.lightGreen,
+                  ),
+                  centerTitle: true,
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  <Widget>[],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

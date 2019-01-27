@@ -2,56 +2,122 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'model.dart';
+import 'the_people.dart';
+import 'robin.dart';
 
-class Login extends StatefulWidget {
-  @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: FlutterLogo(),
-              ),
-              Expanded(
-                child: Text(
-                  'Robin',
+    return Material(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate(
+              <Widget>[
+                Hero(
+                  tag: 'Robin',
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Ink(
+                      color: Colors.greenAccent,
+                      height: 400,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return Robin();
+                              },
+                            ),
+                          );
+                        },
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 24),
+                            child: Hero(
+                              tag: 'Robin title',
+                              child: Text(
+                                'Robin',
+                                style: TextStyle(
+                                  fontSize: 48,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.account_circle),
-                  onPressed: () {
-                    ScopedModel.of<AppModel>(context).login();
-                    Navigator.pushNamed(context, 'splash');
-                  },
+                Material(
+                  color: Colors.transparent,
+                  child: Ink(
+                    height: 100,
+                    color: Colors.redAccent,
+                    child: InkWell(
+                      onTap: () async {
+                        ScopedModel.of<AppModel>(context).login();
+                      },
+                      child: Center(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                flex: 2,
-              ),
-            ],
+                Hero(
+                  tag: 'The People',
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Ink(
+                      height: 400,
+                      color: Colors.lightGreen,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return ThePeople();
+                              },
+                            ),
+                          );
+                        },
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 24),
+                            child: Hero(
+                              tag: 'The People title',
+                              child: Text(
+                                'The People',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
+

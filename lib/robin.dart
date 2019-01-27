@@ -3,60 +3,57 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'model.dart';
 
-class Robin extends StatefulWidget {
-  @override
-  _RobinState createState() => _RobinState();
-}
-
-class _RobinState extends State<Robin> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class Robin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Robin"),
-        ),
-        body: Center(child: Text("User data will go here: ")),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.show_chart),
-              title: Text('Chart'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.attach_money,
-                color: Colors.transparent,
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          ScopedModel.of<AppModel>(context).donate(Category.FOOD);
+        },
+        icon: Icon(Icons.attach_money),
+        label: Text("Donate"),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.greenAccent,
+      ),
+      body: Hero(
+        tag: 'Robin',
+        child: Material(
+          color: Colors.greenAccent,
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                pinned: true,
+                expandedHeight: 120,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Hero(
+                    tag: 'Robin title',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Text(
+                        'Robin',
+                        style: TextStyle(
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  background: Container(
+                    color: Colors.greenAccent,
+                  ),
+                  centerTitle: true,
+                ),
               ),
-              title: Text(" "),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              title: Text("Distribution"),
-            ),
-          ],
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            ScopedModel.of<AppModel>(context).donate(Category.FOOD);
-          },
-          icon: Icon(Icons.attach_money),
-          label: Text("Donate"),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  <Widget>[],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
