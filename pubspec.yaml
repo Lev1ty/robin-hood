@@ -26,7 +26,6 @@ dependencies:
   firebase_core: any
   geolocator: any
   google_sign_in: any
-  http: any
   scoped_model: any
 
 dev_dependencies:
