@@ -105,6 +105,7 @@ class _CameraState extends State<Camera> {
     String address = words.sublist(0, lastIndex+1).join(" ");
     print(address);
 
+
     return true;
   }
 
