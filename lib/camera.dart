@@ -59,16 +59,12 @@ class _CameraState extends State<Camera> {
             ? Text('Please take a photo of your reciept')
             : enableUpload(),
       ),
-      floatingActionButton: Column(
-        children: <Widget>[
+      floatingActionButton:
           FloatingActionButton(
             onPressed: getImage,
             tooltip: 'Take Photo',
             child: Icon(Icons.photo_camera),
           ),
-        ],
-
-      ),
     );
   }
   Widget enableUpload() {
