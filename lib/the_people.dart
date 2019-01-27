@@ -18,7 +18,7 @@ class PointsLineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: ScopedModel.of<AppModel>(context).donationHistory,
+        stream: ScopedModel.of<AppModel>(context).receiverHistory,
         builder:
             (BuildContext buildContext, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
@@ -40,7 +40,7 @@ class PointsLineChart extends StatelessWidget {
               ].cast<charts.Series<dynamic, int>>(),
               animate: animate,
               defaultRenderer:
-              new charts.LineRendererConfig(includePoints: true));
+                  new charts.LineRendererConfig(includePoints: true));
         });
   }
 }
@@ -68,7 +68,7 @@ class DonutAutoLabelChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: ScopedModel.of<AppModel>(context).donationHistory,
+        stream: ScopedModel.of<AppModel>(context).receiverHistory,
         builder:
             (BuildContext buildContext, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
@@ -88,7 +88,7 @@ class DonutAutoLabelChart extends StatelessWidget {
                     ),
                   ],
                   labelAccessorFn: (d_DonationsCategory row, _) =>
-                  '${row.category}',
+                      '${row.category}',
                 )
               ].cast<charts.Series<dynamic, int>>(),
               animate: animate,
@@ -107,21 +107,30 @@ class d_DonationsCategory {
 
   d_DonationsCategory(this.enumeration, this.category, this.dollars);
 }
+
 class ThePeople extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+        onPressed: () async {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
                 return Camera();
               },
             ),
-          );
+          ).then((address) {
+            if (address) {
+              print('Withdrawl successful');
+              ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+            }
+          });
+//          if (address) {
+//            print('Withdrawl successful');
+//            ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
+//          }
+//          ScopedModel.of<AppModel>(context).withdrawl(250, Category.FOOD);
         },
         icon: Icon(Icons.attach_money),
         label: Text("Withdrawl"),
@@ -155,7 +164,6 @@ class ThePeople extends StatelessWidget {
                   ),
                   background: Container(
                     color: Colors.lightGreen,
-
                   ),
                   centerTitle: true,
                 ),
@@ -189,14 +197,14 @@ class ThePeople extends StatelessWidget {
                           ),
                           StreamBuilder<QuerySnapshot>(
                             stream: ScopedModel.of<AppModel>(context)
-                                .donationHistory,
+                                .receiverHistory,
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               int count = 0;
                               if (snapshot.connectionState !=
                                   ConnectionState.waiting) {
                                 count = ScopedModel.of<AppModel>(context)
-                                    .count(snapshot);
+                                    .countReceiver(snapshot);
                               }
                               return Text('$count Withdrawals');
                             },

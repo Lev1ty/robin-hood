@@ -107,6 +107,13 @@ class AppModel extends Model {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> get receiverHistory {
+    return Firestore.instance
+        .collection('donationHistory')
+        .where('receiver', isEqualTo: _documentReference)
+        .snapshots();
+  }
+
   num amountByCategory(
       Category category, AsyncSnapshot<QuerySnapshot> snapshot) {
     return (snapshot.data.documents
@@ -122,6 +129,14 @@ class AppModel extends Model {
     return snapshot.data.documents
         .where((DocumentSnapshot documentSnapshot) =>
             documentSnapshot['donator'] == _documentReference)
+        .toList()
+        .length;
+  }
+
+  num countReceiver(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return snapshot.data.documents
+        .where((DocumentSnapshot documentSnapshot) =>
+    documentSnapshot['receiver'] == _documentReference)
         .toList()
         .length;
   }
